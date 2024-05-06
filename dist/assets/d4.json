@@ -1,0 +1,5 @@
+{"success":true,"results":[
+  {"value":1,"name":"例题2-11","neibanjing":0.04,"waibanjing":0.08,"chuwen":20,"daorexishu":0.3,"midu":10,"birerong":10,"neireyuan":0,"shijian":600,"shijianbuchang":10,"jiedianshu":101,"zuigaowendu":50,"zuidiwendu":30,"reliumidu1":298.6,"huanrexishu2":10000,"huanjingwendu2":30},
+  {"value":2,"name":"涮肉丸","neibanjing":0,"waibanjing":0.0075,"chuwen":0,"daorexishu":0.46,"midu":1030,"birerong":3500,"neireyuan":0,"shijian":10,"shijianbuchang":1,"jiedianshu":101,"zuigaowendu":100,"zuidiwendu":0,"reliumidu1":0,"huanrexishu2":2000,"huanjingwendu2":100},
+  {"value":3,"name":"例题3-3","neibanjing":0,"waibanjing":0.02,"chuwen":10,"daorexishu":0.5,"midu":1000,"birerong":3310,"neireyuan":0,"shijian":612,"shijianbuchang":12,"jiedianshu":101,"zuigaowendu":100,"zuidiwendu":10,"reliumidu1":0,"huanrexishu2":1200,"huanjingwendu2":100}
+]}

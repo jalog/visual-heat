@@ -1,0 +1,278 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge,chrome=1">
+  <title>球壳（球）导热虚拟实验 - Virtual Heat Conduction Experiment</title>
+  <meta name="Description" content="导热虚拟仿真实验 Virtual Heat Conduction Experiment">
+  <meta name="Keywords" content="导热虚拟仿真实验,导热,虚拟,虚拟仿真,虚拟仿真实验,仿真,仿真实验,虚拟实验,华北电力大学,动力工程系">
+  <meta name="Author" content="刘彦丰，梁秀俊，李忻">
+  <meta http-equiv="Cache-Control" content="no-cache, no-store, must-revalidate">
+  <meta http-equiv="Pragma" content='no-cache'>
+  <meta http-equiv="Expires" content="0">
+  <link rel="stylesheet" href="./assets/semantic.css">
+  <link rel="stylesheet" href="./assets/style.css?v=2021030515">
+  <script>
+    const v = '20210317152600';
+    if(!window.location.search) {
+      window.location.href += `?v=${v}`;
+    }
+    var _hmt = _hmt || [];
+    (function () {
+      var hm = document.createElement("script");
+      hm.src = "https://hm.baidu.com/hm.js?4eadf989b23e07810b83d436d4a2f822";
+      var s = document.getElementsByTagName("script")[0];
+      s.parentNode.insertBefore(hm, s);
+    })();
+  </script>
+</head>
+
+<body>
+  <div id="menu" class="ui large blue inverted top fixed menu" style="background-color:rgba(17, 39, 105, 1);">
+    <h3 class="header item">球壳（球）导热虚拟实验</h3>
+    <div class="ui divider"></div>
+    <div class="ui dropdown item" id="dropdownM" style="" tabindex="0"><span class="text">选择常用物质</span><i
+        class="dropdown icon"></i>
+      <div class="menu" tabindex="-1"></div>
+    </div>
+    <div class="ui dropdown item" id="dropdownE" style="" tabindex="0"><span class="text">算例</span><i
+        class="dropdown icon"></i>
+      <div class="menu" tabindex="-1"></div>
+    </div>
+    <div class="right floated item"><img src="./assets/banner.png" rel="华北电力大学动力工程系"></div>
+  </div>
+  <div id="content">
+    <div class="ui form" style="margin-top: 24px;">
+      <div class="seven fields">
+        <div class="field"><label class="ui blue label">内半径 - 外半径<br>m</label>
+          <div class="ui two column grid">
+            <div class="column" style="padding-right: 0;"><input id="neibanjing" type="text" name="R1" tabindex="1"
+                value="0.04"></div>
+            <div class="column" style="padding-left: 0;"><input id="waibanjing" type="text" name="R2" tabindex="2"
+                value="0.08"></div>
+          </div>
+        </div>
+        <div class="field"><label class="ui blue label">导热系数<br>W/(m*K)</label><input id="daorexishu" type="text"
+            tabindex="4" value="0.3"></div>
+        <div class="field"><label class="ui blue label">比热容<br>J/(kg*K)</label><input id="birerong" type="text"
+            tabindex="6" value="2500"></div>
+        <div class="field"><label class="ui blue label">时间<br>s</label><input id="shijian" type="text" name="time"
+            tabindex="8" value="3600"></div>
+        <div class="field"><label class="ui blue label">节点数<br>&nbsp;</label><input id="jiedianshu" type="text"
+            tabindex="10" value="101" onchange="disableButton('Forward', false)"></div>
+        <div class="field"><label class="ui blue label">最高温度<br>°C</label><input id="zuigaowendu" type="text" name="tmax"
+            tabindex="11" value="60"></div>
+        <div class="field"><label class="ui blue label">最低温度<br>°C</label><input id="zuidiwendu" type="text" name="tmin"
+            tabindex="12" value="20"></div>
+      </div>
+      <div class="seven fields">
+        <div class="field"><label class="ui blue label">初温<br>°C</label><input id="chuwen" type="text" tabindex="3"
+            value="20"></div>
+        <div class="field"><label class="ui blue label">密度<br>kg/m<sup>3</sup></label><input id="midu" type="text"
+            tabindex="5" value="527"></div>
+        <div class="field"><label class="ui blue label">内热源<br>kW/m<sup>3</sup></label><input id="neireyuan" type="text"
+            tabindex="7" value="0"></div>
+        <div class="field"><label class="ui blue label">时间步长<br>s</label><input id="shijianbuchang" type="text" name="dt"
+            tabindex="9" value="60"></div>
+        <div class="field">
+          <div class="ui labeled icon orange huge fluid button" id="buttonSimulate" onclick="onButtonSimulate()"><i
+              class="play icon"></i>开始</div>
+          <div class="ui large progress" id="progressSimulate" style="margin-top: 4px; display: none;">
+            <div class="bar">
+              <div class="progress"></div>
+            </div>
+            <div class="label"></div>
+          </div>
+        </div>
+        <div class="field">
+          <div class="ui labeled icon orange huge fluid disabled button" id="buttonForward" onclick="onButtonForward()"><i
+              class="forward icon"></i>继续</div>
+          <div class="ui large progress" id="progressForward" style="margin-top: 4px; display: none;">
+            <div class="bar">
+              <div class="progress"></div>
+            </div>
+            <div class="label"></div>
+          </div>
+        </div>
+        <div class="field"><label class="ui blue label">总计算时间<br>s</label><input class="output" id="zongjisuanshijian"
+            type="text" tabindex="-1"></div>
+      </div>
+      <div class="ui error message"></div>
+      <div class="ui stackable grid" style="margin-top: 3em;">
+        <div class="two wide column">
+          <h3 class="ui header">内侧边界</h3>
+          <p style="font-size: 16px;">（恒热流）</p>
+          <div class="field"><label class="ui blue label">热流量<br>W</label><input id="reliuliang1"
+              type="text" tabindex="13" value="6"></div>
+        </div>
+        <div class="five wide center middle aligned column" style="height: 467.5px;">
+          <div id="main1"
+            style="height: 400px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;"
+            _echarts_instance_="ec_1614407761481">
+            <div
+              style="position: relative; width: 509.5px; height: 439.5px; padding: 0px; margin: 0px; border-width: 0px;">
+              <canvas data-zr-dom-id="zr_0" width="1019" height="879"
+                style="position: absolute; left: 0px; top: 0px; width: 509.5px; height: 439.5px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas>
+            </div>
+            <div class=""></div>
+          </div>
+        </div>
+        <div class="two wide column">
+          <h3 class="ui header">外侧边界</h3>
+          <p style="font-size: 16px;">（对流传热）</p>
+          <div class="field"><label class="ui blue label">表面传热系数<br>W/(m<sup>2</sup>*K)</label><input id="huanrexishu2"
+              type="text" tabindex="14" value="7.5"></div>
+          <div class="field"><label class="ui blue label">环境温度<br>°C</label><input id="huanjingwendu2" type="text"
+              tabindex="15" value="20"></div>
+          <div class="field"><label class="ui blue label">吸热热流量<br>W</label><input class="output" id="reliuliang2"
+              type="text" tabindex="-1"></div>
+        </div>
+        <div class="seven wide center aligned column">
+          <div id="main2"
+            style="height: 460px; -webkit-tap-highlight-color: transparent; user-select: none; position: relative;"
+            _echarts_instance_="ec_1614407761482">
+            <div
+              style="position: relative; width: 725px; height: 460px; padding: 0px; margin: 0px; border-width: 0px; cursor: default;">
+              <canvas data-zr-dom-id="zr_0" width="1450" height="920"
+                style="position: absolute; left: 0px; top: 0px; width: 725px; height: 460px; user-select: none; -webkit-tap-highlight-color: rgba(0, 0, 0, 0); padding: 0px; margin: 0px; border-width: 0px;"></canvas>
+            </div>
+            <div class=""></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+  
+  <script src="./assets/jquery.js"></script>
+  <script src="./assets/semantic.js"></script>
+  <script src="./assets/echarts.js"></script>
+  <script src="./assets/util.210309.js"></script>
+  <script src="./assets/d4.210311.js"></script>
+  <script>
+    function onButtonSimulate() {
+      $('#zongjisuanshijian').val(0);
+      init();
+      $('.ui.form').form('validate form');
+    }
+
+    function onButtonForward() {
+      $('.ui.form').form('validate form');
+    }
+
+    function disableButton(button, showProgress = true) {
+      $(`#button${button}`).addClass('disabled');
+      if (showProgress) $(`#progress${button}`).show();
+      else $(`#progress${button}`).hide();
+    }
+
+    function enableButton(button) {
+      $(`#button${button}`).removeClass('disabled');
+    }
+
+    function initProgerss(step) {
+      $('#progressSimulate').progress({
+        total: step,
+        label: 'ratio',
+        text: {
+          ratio: '{value} / {total}'
+        }
+      });
+      $('#progressForward').progress({
+        total: step,
+        label: 'ratio',
+        text: {
+          ratio: '{value} / {total}'
+        }
+      });
+    }
+
+    function increaseProgress() {
+      if ($('#progressSimulate').css('display') !== 'none') $('#progressSimulate').progress('increment');
+      if ($('#progressForward').css('display') !== 'none') $('#progressForward').progress('increment');
+    }
+
+    function onButtonSave() {
+      const e = document.createElement('a');
+      e.download = 'vhce_' + Date.now().toString() + '.png';
+      e.target = '_blank';
+      e.href = myChart.getConnectedDataURL({
+        type: 'png'
+      });
+      const i = new MouseEvent('click', {
+        bubbles: !0,
+        cancelable: !1
+      });
+      e.dispatchEvent(i);
+    }
+    const Precision = [Math.pow(10, -6), Math.pow(10, 6)];
+    $(() => {
+      //- $('#m_d4').addClass('active');
+      if ('d4' !== 'd5') {
+        $('#dropdownM').show();
+        $('#dropdownM').dropdown({
+          apiSettings: {
+            url: './assets/matter.json'
+          },
+          saveRemoteData: false,
+          onChange: function (v, t) {
+            $.get('./assets/matter.json', function (data) {
+              const o = data.results.find(x => x.value === v);
+              $.each(o, function (i, v) {
+                $('#' + i).val(v).transition('glow');
+              });
+              disableButton('Forward', false);
+            });
+          }
+        });
+      }
+      if ('d4' === 'd1' || 'd4' === 'd3' || 'd4' === 'd4') {
+        $('#dropdownE').show();
+        $('#dropdownE').dropdown({
+          apiSettings: {
+            url: './assets/d4.json'
+          },
+          saveRemoteData: false,
+          onChange: function (v, t) {
+            $('#dropdownM').dropdown('restore defaults');
+            $.get('./assets/d4.json', function (data) {
+              const o = data.results.find(x => x.value === 1 * v);
+              $.each(o, function (i, v) {
+                $('#' + i).val(v).transition('glow');
+              });
+              disableButton('Forward', false);
+            });
+          }
+        });
+      }
+    });
+  </script>
+  <script>
+    function resizeMenu() {
+      const $menu = $('#menu');
+      if($(document).width() < 768) {
+        $menu.removeClass('top fixed');
+        $menu.addClass('stackable');
+      } else {
+        $menu.removeClass('stackable');
+        $menu.addClass('top fixed');
+      }
+    }
+    // resizeMenu();
+    $(window).resize(()=>{
+      resizeCharts && resizeCharts();
+      // resizeMenu();
+    });
+  </script>
+  <footer>
+    <div class="ui divider"></div>
+    <div class="ui container">
+      <div class="ui right aligned basic segment">
+        <p>版权所有 © 华北电力大学动力工程系</p>
+      </div>
+    </div>
+  </footer>
+</body>
+
+</html>

@@ -1,0 +1,27 @@
+body { padding: 50px; font: 16px Arial, sans-serif; }
+
+a { color: #00B7FF; }
+
+.ui.form .field>label { font-size: 16px; }
+.ui.checkbox label { font-size: 16px; }
+.ui.input { font-size: 16px; }
+.ui.form input[type='text'] { font-size: 16px; text-align: center; padding: 0.67857143em 0.2em; }
+
+.ui.form input.output { background-color: #e6f8f8; }
+.ui.input>input.output { background-color: #e6f8f8; }
+
+#menu .right.item img { width: 240px; }
+
+@media only screen and (max-width: 768px) {
+  body { padding: 0; font-size: 12px; }
+  footer { padding: 0 0 3em 0; }
+  .masthead .ui.menu { display: none; }
+  .ui.menu .item .e { display: none; }
+  #menu .right.floated.item { display: none; }
+  #content { padding-top: 3em; }
+  
+  .ui.form .field>label { font-size: 12px; }
+  .ui.checkbox label { font-size: 12px; }
+  .ui.input { font-size: 12px; }
+  .ui.form input[type='text'] { font-size: 12px; text-align: center; padding: 0.67857143em 0.2em; }
+}
